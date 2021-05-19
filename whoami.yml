@@ -1,0 +1,17 @@
+---
+ - name: show return value of command
+   hosts: ubuntu-test
+   ignore_errors: true
+
+   tasks:
+      - name: capture out of id command
+        command: id -un
+        register: login
+# print to cli
+      - debug: var=login
+      - debug: msg="{{ login.stdout }}"
+# print to file 
+      - local_action:
+              module: copy
+              content: "{{ login.stdout }}"
+              dest: /etc/ansible/ansible_ed/1.txt
