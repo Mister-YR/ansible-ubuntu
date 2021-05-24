@@ -1,0 +1,26 @@
+- name: get-ip where not found file.beat service
+  hosts: all
+  gather_facts: true
+  #become: true
+
+  vars:
+   serv_status: filebeat.service
+  # print_file: /etc/ansible/ip-gpu.txt
+
+  tasks:
+  - name: "get all process on server"
+    ansible.builtin.service_facts:
+
+  - name: "print all process on server to var"
+    debug:
+      var: ansible_facts.services
+
+  - name: "get about process from variable"
+    debug:
+      msg: "{{ansible_facts.services[serv_status].state}}"
+
+  - name: "print to console"
+    ansible.builtin.debug:
+      msg: "{{ ansible_default_ipv4.address }}"
+    when: ansible_facts['services'][serv_status].state == "stopped"
+    #delegate_to: localhost
