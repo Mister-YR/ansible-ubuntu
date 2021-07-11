@@ -1,6 +1,7 @@
 # add key to root
 ---
 - hosts: all
+  become: yes
   ignore_errors: true
   
   vars:
