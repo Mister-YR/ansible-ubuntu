@@ -1,11 +1,10 @@
-# basic install
+# add key to root
 ---
 - hosts: all
-  ansible_become: yes  # use sudo 
   ignore_errors: true
   
   vars:
-    ssh_key:
+     ssh_key:
 
   tasks:
 #***************add_ssh-key-to-root**********************
