@@ -1,6 +1,6 @@
 # basic install
 ---
-- hosts: ubuntu-test
+- hosts: all
   become: true
 
   tasks:
@@ -23,6 +23,8 @@
       - git
       - lnav
       - ntp
+      - chrony
+      - tree
       state: latest
 
 #*****************set-up teme-zone***********************
