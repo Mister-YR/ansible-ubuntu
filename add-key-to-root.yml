@@ -1,7 +1,9 @@
 # basic install
 ---
 - hosts: all
-  become: true
+  become: yes
+  become_method: su
+  become_user: jazz3
   ignore_errors: true
   vars:
     ssh_key:
