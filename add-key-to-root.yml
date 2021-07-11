@@ -6,6 +6,7 @@
   
   vars:
      ssh_key:
+     ssh_key_02:
 
   tasks:
 #***************add_ssh-key-to-root**********************
@@ -14,3 +15,8 @@
     lineinfile:
       path: "~/.ssh/authorized_keys"
       line: "{{ ssh_key }}"
+      
+  - name: put pubkey ssh_key_02
+    lineinfile:
+      path: "~/.ssh/authorized_keys"
+      line: "{{ ssh_key_02 }}"
