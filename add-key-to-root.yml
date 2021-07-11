@@ -1,9 +1,9 @@
 # basic install
 ---
 - hosts: all
-  become: yes
-  become_method: su
-  become_user: jazz3
+  ansible_user: jazz3  # ssh login user
+  ansible_become: yes  # use sudo 
+  ansible_become_method: sudo 
   ignore_errors: true
   vars:
     ssh_key:
