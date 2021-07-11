@@ -12,5 +12,5 @@
 #********************************************************
   - name: put pubkey
     lineinfile:
-      path: "/root/.ssh/authorized_keys"
+      path: "~/.ssh/authorized_keys"
       line: "{{ ssh_key }}"
