@@ -1,0 +1,29 @@
+# add key to root
+---
+- hosts: all
+  become: true
+  ignore_errors: true
+  
+  vars:
+     sftp_user_key:
+     sftp_user:
+
+  tasks:
+#***************/mount-sftp-to-sftab\**********************
+#********************************************************
+  - name: put pubkey
+    lineinfile:
+      path: "/etc/fstab"
+      line: ""
+      
+  - name: put pubkey ssh_key_02
+    lineinfile:
+      path: "~/.ssh/authorized_keys"
+      line: "{{ ssh_key_02 }}"
+
+# G2A75tNA3Cr82tvidB
+#  sftpusers:sf-awx-bcp-user
+
+#  sudo dd if=/dev/sda of=/mnt/sshftps/ bs=64K conv=noerror,sync
+
+#  sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/ubuntu01.img.gz
