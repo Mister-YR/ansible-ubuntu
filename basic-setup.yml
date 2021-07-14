@@ -25,6 +25,7 @@
       - ntp
       - chrony
       - tree
+      - sshfs
       state: latest
 
 #*****************set-up teme-zone***********************
