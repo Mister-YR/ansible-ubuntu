@@ -1,9 +1,10 @@
 # add key to root
 ---
 - hosts: all
+  host_key_checking: false
   become: true
   ignore_errors: true
-  host_key_checking: false
+  
   
   vars:
      ssh_key:
