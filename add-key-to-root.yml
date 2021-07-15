@@ -3,6 +3,7 @@
 - hosts: all
   become: true
   ignore_errors: true
+  host_key_checking: false
   
   vars:
      ssh_key:
