@@ -23,7 +23,6 @@
       - git
       - lnav
       - ntp
-      - chrony
       - tree
       - sshfs
       state: latest
