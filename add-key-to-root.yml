@@ -4,9 +4,7 @@
   become: true
   ignore_errors: true
   
-  
   vars:
-     host_key_checking: false
      ssh_key:
      ssh_key_02:
 
