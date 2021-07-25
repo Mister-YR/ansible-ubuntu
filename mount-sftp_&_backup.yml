@@ -12,10 +12,11 @@
       line: "#mount sftp"
       line: "192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps/ fuse.sshfs defaults 0 0"
       
-  - name: create directory for backup
-    file:
-       path: /mnt/sshftps/
-       state: directory
+  - name: Mount DVD read-only
+    mount:
+      path: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
+      src: /mnt/sshftps/
+      state: present
     
   - name: mount sftp via shell *without reboot*
     raw: sudo mount -av
