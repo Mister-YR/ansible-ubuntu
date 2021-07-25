@@ -18,7 +18,7 @@
        state: directory
     
   - name: mount sftp via shell *without reboot*
-     raw: 'mount -av'
+    raw: 'mount -av'
 
   #- name: create baremetal backup via dd to /nmt/sshftps
   #  shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ ansible_facts['nodename'] }}-{{ ansible_date_time.date }}.img.gz
