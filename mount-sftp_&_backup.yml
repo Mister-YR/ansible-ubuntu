@@ -15,6 +15,7 @@
   - name: add record to sftab
     lineinfile:
       path: "/etc/fstab"
+      line: "#mount sftp"
       line: "192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps fuse.sshfs defaults 0 0"
       
   - name: create directory for backup
