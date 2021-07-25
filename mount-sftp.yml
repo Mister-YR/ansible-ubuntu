@@ -1,29 +1,30 @@
-# add key to root
 ---
 - hosts: all
+  gather_facts: true
   become: true
   ignore_errors: true
-  
+
   vars:
-     sftp_user_key:
-     sftp_user:
+    hostname-ta4ki:
 
   tasks:
-#***************/mount-sftp-to-sftab\**********************
-#********************************************************
-  - name: put pubkey
+  - name: get hostanme to variable 'hostname-ta4ki'
+    shell: echo $HOSTNAME
+    register: hostname-ta4ki
+
+  - name: add record to sftab
     lineinfile:
       path: "/etc/fstab"
-      line: ""
+      line: "192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps fuse.sshfs defaults 0 0"
       
-  - name: put pubkey ssh_key_02
-    lineinfile:
-      path: "~/.ssh/authorized_keys"
-      line: "{{ ssh_key_02 }}"
+  - name: create directory for backup
+    shell: 'mkdir /mnt/sshftps/'
+    
+  - name: mount sftp via shell *without reboot*
+    shell: 'mount -av'
 
-# G2A75tNA3Cr82tvidB
-#  sftpusers:sf-awx-bcp-user
+  - name: create baremetal backup via dd to /nmt/sshftps
+    shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ hostname-ta4ki }}-{{ ansible_date }}.img.gz
 
-#  sudo dd if=/dev/sda of=/mnt/sshftps/ bs=64K conv=noerror,sync
-
-#  sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/ubuntu01.img.gz
+  - name: unmount sftp after backup
+    shell: 'umount /mnt/sshftps'
