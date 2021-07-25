@@ -4,9 +4,6 @@
   become: true
   ignore_errors: true
 
-  vars:
-    hostname_ta4ki:
-
   tasks:
   
   - name: add record to sftab
