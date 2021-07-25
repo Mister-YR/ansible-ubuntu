@@ -5,7 +5,7 @@
   ignore_errors: true
 
   vars:
-   hostname-ta4ki:
+    hostname_ta4ki:
 
   tasks:
   - name: get hostanme to variable 'hostname-ta4ki'
@@ -24,7 +24,7 @@
     shell: 'mount -av'
 
   - name: create baremetal backup via dd to /nmt/sshftps
-    shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ hostname-ta4ki }}-{{ ansible_date }}.img.gz
+    shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ hostname_ta4ki }}-{{ ansible_date }}.img.gz
 
   - name: unmount sftp after backup
     shell: 'umount /mnt/sshftps'
