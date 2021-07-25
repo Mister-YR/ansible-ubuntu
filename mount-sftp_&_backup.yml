@@ -8,10 +8,7 @@
     hostname_ta4ki:
 
   tasks:
-  - name: get hostanme to variable 'hostname-ta4ki'
-    shell: echo $HOSTNAME
-    register: hostname_ta4ki
-
+  
   - name: add record to sftab
     lineinfile:
       path: "/etc/fstab"
@@ -27,7 +24,7 @@
     shell: 'mount -av'
 
   - name: create baremetal backup via dd to /nmt/sshftps
-    shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ hostname_ta4ki }}-{{ ansible_date_time.date }}.img.gz
+    shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ ansible_facts['nodename'] }}-{{ ansible_date_time.date }}.img.gz
 
   - name: unmount sftp after backup
     shell: 'umount /mnt/sshftps'
