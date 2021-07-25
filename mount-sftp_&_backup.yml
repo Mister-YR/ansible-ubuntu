@@ -15,8 +15,8 @@
   - name: mount sftp
     shell: 'sshfs root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps'
     
-  - name: mount sftp via shell *without reboot*
-    raw: sudo mount -av
+  #- name: mount sftp via shell *without reboot*
+  #  raw: sudo mount -av
 
   #- name: create baremetal backup via dd to /nmt/sshftps
   #  shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ ansible_facts['nodename'] }}-{{ ansible_date_time.date }}.img.gz
