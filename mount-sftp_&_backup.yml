@@ -15,7 +15,7 @@
         follow_symlinks,allow_other,
         default_permissions,uid=1000,gid=1000"
       state: present
-   tags: mount
+    tags: mount
   
  # - name: add record to sftab
  #   lineinfile:
