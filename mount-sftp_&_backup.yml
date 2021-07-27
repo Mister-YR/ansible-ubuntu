@@ -33,12 +33,12 @@
 #     src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux
 #      fstype: fuse.sshfs
 #      state: mounted
-   register: result
-    
-  - name: Print return information from the previous task
-    ansible.builtin.debug:
-      var: result
-      verbosity: 2
+#   register: result
+##    
+# - name: Print return information from the previous task
+#    ansible.builtin.debug:
+#      var: result
+#      verbosity: 2
   #- name: mount sftp
   #  expect:
   #     raw: 'mount -av'
