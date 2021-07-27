@@ -14,7 +14,7 @@
       
   - name: remount website
     mount:
-      path: /mnt/sshftps
+      path: /mnt/sshftps/
       src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux
       fstype: fuse.sshfs
       state: mounted
