@@ -16,7 +16,7 @@
     mount:
       path: /mnt/sshftps
       src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux
-      fstype: none
+      fstype: fuse.sshfs
       opts: bind
       state: mounted
     register: result
