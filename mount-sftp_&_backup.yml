@@ -14,7 +14,7 @@
       
   - name: mount sftp
     expect:
-       raw: /usr/bin/sshfs -o idmap=user root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
+       raw: 'sshfs root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps'
   #    command: bash -c "trap '' HUP; sshfs -o reconnect,nonempty,allow_other,idmap=root root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps"
   #  local_action: shell echo root | sshfs root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
   # shell echo root123 | sshfs -o password_stdin,reconnect,nonempty,allow_other,idmap=user stack@10.1.1.1:/home/stack /mnt/server1  
