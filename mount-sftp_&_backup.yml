@@ -16,8 +16,8 @@
     mount:
       name: /mnt/sshftps
       src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux
-      fstype: sshfs
-      state: fuse
+      fstype: fuse
+      state: mounted
     register: result
     
   - name: Print return information from the previous task
