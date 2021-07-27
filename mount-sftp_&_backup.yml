@@ -13,11 +13,15 @@
  #    line: "192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps/ fuse.sshfs defaults 0 0"
       
   - name: remount website
-    mount:
-      path: /mnt/sshftps/
-      src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux
-      fstype: fuse.sshfs
-      state: mounted
+    command: mount -av
+        args:
+        warn: no
+        become: true
+#    mount:
+#      path: /mnt/sshftps/
+#     src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux
+#      fstype: fuse.sshfs
+#      state: mounted
     register: result
     
   - name: Print return information from the previous task
