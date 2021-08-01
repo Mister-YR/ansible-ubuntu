@@ -2,7 +2,6 @@
 - hosts: all
   gather_facts: true
   become: true
-  user: root
   ignore_errors: true
 
   tasks:
@@ -18,9 +17,10 @@
  #     state: present
  #   tags: mount
   - name: run script
+    cammand: sh /root/scripts/mount-script.sh
  #   script: /root/scripts/mount-script.sh
  #  script: 
-    ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
+ #   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
  #     remote_src: yes
  # - mount:
  #     src: 'root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/'
