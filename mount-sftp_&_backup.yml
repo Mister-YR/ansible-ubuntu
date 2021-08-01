@@ -10,20 +10,22 @@
  #   lineinfile:
  #     path: "/etc/fstab"
  #     line: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/"
-  - name: mount sshfs permanently
-    mount:
-      name: /root/sshfs/
-      src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/
-      fstype: fuse.sshfs
-      opts:
-        "rw,noexec,nosuid,nodev,idmap=user,
-        follow_symlinks,allow_other,
-        default_permissions,uid=1000,gid=1000"
-      state: present
-    tags: mount
- #- name: run script
- #   shell: sshfs root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
- #   script: /root/scripts/mount-script.sh
+ # - name: mount sshfs permanently
+ ##   mount:
+ #     name: /root/sshfs/
+ #     src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/
+ #     fstype: fuse.sshfs
+ ##     opts:
+  #      "rw,noexec,nosuid,nodev,idmap=user,
+  #      follow_symlinks,allow_other,
+  #      default_permissions,uid=1000,gid=1000"
+  #    state: present
+  #  tags: mount
+   name: run script
+   shell: /root/scripts/mount-script.sh
+   args:
+     exacutable: /bin/bash
+   become: yes
  #  script: 
  #   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
  #     remote_src: yes
