@@ -19,7 +19,7 @@
  #   tags: mount
   - name: run mount script
     script: /root/scripts/mount-script.sh
-    remote_src: yes
+      remote_src: yes
  # - name: add record to sftab
  #   lineinfile:
  #     path: "/etc/fstab"
