@@ -17,7 +17,7 @@
  #     state: present
  #   tags: mount
   - name: run mount script
-    ansible.builtin.script: mount-script.sh --some-argument 1234
+    ansible.builtin.script: /root/mount-script.sh --some-argument 1234
  # - name: add record to sftab
  #   lineinfile:
  #     path: "/etc/fstab"
