@@ -8,9 +8,9 @@
   tasks:
   - name: "Mount home dir in each chroot"
     mount:
-      src: "root@192.168.168.13/data/sf-awx-bcp-user/bcp-linux"
+      src: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux"
       path: "/mnt/sshftps"
-      fstype: "fuse.sshfs"
+      fstype: "none"
       opts: "bind"
       state: "mounted"
   #  loop: "{{ sshd_sftp_users }}"
