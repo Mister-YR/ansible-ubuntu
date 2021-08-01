@@ -24,7 +24,7 @@
   - name: run script
     shell: /root/scripts/mount-script.sh
     args:
-      exacutable: /bin/bash
+      executable: /bin/bash
     become: yes
  #  script: 
  #   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
