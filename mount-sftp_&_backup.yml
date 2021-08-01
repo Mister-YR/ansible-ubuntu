@@ -20,7 +20,6 @@
   - name: run script
  #   script: /root/scripts/mount-script.sh
     script: /root/scripts/mount-script.sh
-      remote_src: yes
  # - mount:
  #     src: 'root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/'
  #     name: '/mnt/sshftps/'
