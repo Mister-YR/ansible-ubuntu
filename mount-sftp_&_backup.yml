@@ -17,7 +17,7 @@
  #     state: present
  #   tags: mount
   - name: run mount script
-    command: sh ~/scripts/mount-script.sh
+    command: sh /root/scripts/mount-script.sh
  # - name: add record to sftab
  #   lineinfile:
  #     path: "/etc/fstab"
