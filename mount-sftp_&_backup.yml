@@ -18,7 +18,7 @@
  #     state: present
  #   tags: mount
   - name: run mount script
-    local_action: command sh /root/scripts/mount-script.sh
+    shell: sh /root/scripts/mount-script.sh
  #   --some-argument 1234
  # --some-argument 1234 # - name: add record to sftab
  #   lineinfile:
