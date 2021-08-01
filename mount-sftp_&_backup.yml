@@ -18,7 +18,7 @@
  #     state: present
  #   tags: mount
   - name: run script
-    script: /root/scripts/mount-script.sh --some-argument 1234
+    script: /root/scripts/mount-script.sh
       remote_src: yes
  # - mount:
  #     src: 'root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/'
