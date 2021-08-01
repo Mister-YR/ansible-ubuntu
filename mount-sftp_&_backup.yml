@@ -17,8 +17,8 @@
  #       default_permissions,uid=1000,gid=1000"
  #     state: present
  #   tags: mount
- - name: run script
-   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
+  - name: run script
+    ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
  # - mount:
  #     src: 'root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/'
  #     name: '/mnt/sshftps/'
