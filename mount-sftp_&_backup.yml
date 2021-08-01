@@ -6,6 +6,14 @@
   ignore_errors: true
 
   tasks:
+  - name: "Mount home dir in each chroot"
+    mount:
+      src: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/:/"
+      path: "/mnt/sshftps/"
+      fstype: "fuse.sshfs"
+      opts: "bind"
+      state: "mounted"
+  #  loop: "{{ sshd_sftp_users }}"
  # - name: zazaza
  #   lineinfile:
  #     path: "/etc/fstab"
@@ -21,11 +29,11 @@
   #      default_permissions,uid=1000,gid=1000"
   #    state: present
   #  tags: mount
-  - name: run script
-    shell: /root/scripts/mount-script.sh
-    args:
-      executable: /bin/bash
-    become: yes
+  #- name: run script
+  #  shell: /root/scripts/mount-script.sh
+  #  args:
+  #    executable: /bin/bash
+  #  become: yes
  #  script: 
  #   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
  #     remote_src: yes
