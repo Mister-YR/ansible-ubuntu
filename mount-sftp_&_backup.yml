@@ -17,7 +17,7 @@
  #     state: present
  #   tags: mount
   - name: run script
-    cammand: sh /root/scripts/mount-script.sh
+    command: sh /root/scripts/mount-script.sh
  #   script: /root/scripts/mount-script.sh
  #  script: 
  #   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
