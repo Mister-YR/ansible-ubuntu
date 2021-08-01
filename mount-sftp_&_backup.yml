@@ -2,6 +2,7 @@
 - hosts: all
   gather_facts: true
   become: true
+  user: root
   ignore_errors: true
 
   tasks:
@@ -17,7 +18,7 @@
  #     state: present
  #   tags: mount
   - name: run mount script
-    command: sh /root/scripts/mount-script.sh
+    script: /root/scripts/mount-script.sh
  # - name: add record to sftab
  #   lineinfile:
  #     path: "/etc/fstab"
