@@ -8,7 +8,7 @@
   tasks:
   - name: zazaza
     lineinfile:
-      path: "/etc/fstab/"
+      path: "/etc/fstab"
       line: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/"
  # - name: mount sshfs permanently
  #   mount:
