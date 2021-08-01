@@ -17,7 +17,7 @@
  #     state: present
  #   tags: mount
   - name: Unmount (fusermount) Media Directory
-    command: fusermount -u {{ root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/ /mnt/sshftps/}}
+    command: fusermount -u {{ 192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/ /mnt/sshftps/}}
     become: yes
     ignore_errors: yes
   
