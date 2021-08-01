@@ -6,6 +6,8 @@
   ignore_errors: true
 
   tasks:
+  - name:
+    shell: /usr/bin/sshfs -o idmap=user,reconnect root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
   #- name: "Mount home dir in each chroot"
   #  mount:
   #    src: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux"
@@ -14,12 +16,12 @@
   #    opts: "bind"
   #    state: "mounted"
   #  loop: "{{ sshd_sftp_users }}"
-  - name: zazaza
-    lineinfile:
-      path: "/etc/fstab"
-      line: "192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps/ fuse.sshfs defaults 0 0"
-  - name: zalupa
-    shell: mount -av
+  #- name: zazaza
+  #  lineinfile:
+  #    path: "/etc/fstab"
+  #    line: "192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps/ fuse.sshfs defaults 0 0"
+  #- name: zalupa
+  #  shell: mount -av
  # - name: mount sshfs permanently
  ##   mount:
  #     name: /root/sshfs/
