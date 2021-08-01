@@ -21,11 +21,11 @@
   #      default_permissions,uid=1000,gid=1000"
   #    state: present
   #  tags: mount
-   name: run script
-   shell: /root/scripts/mount-script.sh
-   args:
-     exacutable: /bin/bash
-   become: yes
+  - name: run script
+    shell: /root/scripts/mount-script.sh
+    args:
+      exacutable: /bin/bash
+    become: yes
  #  script: 
  #   ansible.builtin.script: /root/scripts/mount-script.sh --some-argument 1234
  #     remote_src: yes
