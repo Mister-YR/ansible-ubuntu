@@ -8,8 +8,8 @@
   tasks:
   - name: "Mount home dir in each chroot"
     mount:
-      src: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/:/"
-      path: "/mnt/sshftps/"
+      src: "/mnt/sshftps/"
+      path: "root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/"
       fstype: "fuse.sshfs"
       opts: "bind"
       state: "mounted"
