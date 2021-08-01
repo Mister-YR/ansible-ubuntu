@@ -5,17 +5,21 @@
   ignore_errors: true
 
   tasks:
-  - name: mount sshfs permanently
-    mount:
-      name: /mnt/sshftps/
-      src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux:/
-      fstype: fuse.sshfs
-      opts:
-        "rw,noexec,nosuid,nodev,idmap=user,
-        follow_symlinks,allow_other,
-        default_permissions,uid=1000,gid=1000"
-      state: present
-    tags: mount
+ # - name: mount sshfs permanently
+ #   mount:
+ #     name: /mnt/sshftps/
+ #     src: root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux:/
+ #     fstype: fuse.sshfs
+ #     opts:
+ #       "rw,noexec,nosuid,nodev,idmap=user,
+ #       follow_symlinks,allow_other,
+ #       default_permissions,uid=1000,gid=1000"
+ #     state: present
+ #   tags: mount
+  - name: Unmount (fusermount) Media Directory
+    command: fusermount -u {{ root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux/ /mnt/sshftps/}}
+    become: yes
+    ignore_errors: yes
   
  # - name: add record to sftab
  #   lineinfile:
