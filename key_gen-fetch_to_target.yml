@@ -1,0 +1,30 @@
+---
+- hosts: all
+  gather_facts: true
+  become: true
+  ignore_errors: true
+
+  vars:
+    target_host:
+    ssh_key_filename: id_rsa
+
+  tasks:   
+  - name: generate SSH key "{{ssh_key_filename}}"
+    openssh_keypair:
+      path: "/root/.ssh/{{ssh_key_filename}}"
+      type: rsa
+      size: 2048
+      state: present
+      force: no
+           
+  - name: "Copy the public Key using Lookup"
+    shell: 
+      cmd: 'cat ~/.ssh/id_rsa.pub'
+    register: key
+        
+  - name: Copy the key add to authorized_keys using Ansible module
+    delegate_to: 192.168.168.13
+    delegate_facts: true
+    lineinfile:
+     path: "~/.ssh/authorized_keys"
+     line: "{{ key.stdout }}{{ ansible_hostname }}"
