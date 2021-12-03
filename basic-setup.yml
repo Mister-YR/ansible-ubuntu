@@ -27,8 +27,16 @@
       - tree
       - sshfs
       state: latest
+      
+#*****************~set line Numbers in nano~*************
+#********************************************************      
+  - name: enable line numbers in nano editor
+    lineinfile: 
+      path: ~/.nanorc
+      line: set linenumbers
+       
 
-#*****************set-up teme-zone***********************
+#*****************set-up time-zone***********************
 #********************************************************
   - name: chandge time-zone
     timezone:
