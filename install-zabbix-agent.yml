@@ -38,7 +38,7 @@
 
       - name: Create new zabbix config file from template
         template:
-            src: "templates/zabbix_agentd.conf.j2"
+            src: "{{ zabbix_config_agent_url }}"
             dest: "/etc/zabbix/zabbix_agentd.conf"
 
       - name: Start service zabbix-agent
