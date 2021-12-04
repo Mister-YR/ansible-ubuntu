@@ -33,6 +33,7 @@
   - name: enable line numbers in nano editor
     lineinfile: 
       path: ~/.nanorc
+      state: touch
       line: set linenumbers
        
 
