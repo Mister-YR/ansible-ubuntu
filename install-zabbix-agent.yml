@@ -37,11 +37,11 @@
             state: absent
             
       - name: download config
-        get_url: "url={{zabbix_config_agent_url }} dest=/etc/zabbix/"
+        get_url: "url={{zabbix_config_agent_url }} dest=/tmp/"
 
       - name: Create new zabbix config file from template
         template:
-            src: "/etc/zabbix/*.j2"
+            src: "/tmp/*.j2"
             dest: "/etc/zabbix/zabbix_agentd.conf"
 
       - name: Start service zabbix-agent
