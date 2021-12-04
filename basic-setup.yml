@@ -29,12 +29,19 @@
       - sshfs
       state: latest
       
+#*****************~create ~/.nanorc~*********************
+#********************************************************  
+  - name: Creating an ~/.nanorc file
+    file: 
+      path: ~/.nanorc
+      state: touch
+      
 #*****************~set line Numbers in nano~*************
 #********************************************************      
   - name: enable line numbers in nano editor
     lineinfile: 
       path: ~/.nanorc
-      state: touch
+#      state: touch
       line: set linenumbers
        
 
