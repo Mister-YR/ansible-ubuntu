@@ -5,11 +5,6 @@
   ignore_errors: true
 
   tasks:
- #     - name: gather os specific variables
- #       include_vars: "{{ item }}"
- #       with_first_found:
- #           - "vars/{{ ansible_distribution }}.yaml"
-
       - name: Download zabbix repo package
         get_url:
             url: "{{ zabbix_repo_url }}"
@@ -42,8 +37,8 @@
       - name: Create new zabbix config file from template
         template:
 #            src: "{{ zabbix_config_agent_url }}"
-            src: "/tmp/zabbix_agentd.conf.j2"
-            dest: "/etc/zabbix/zabbix_agentd.conf"
+            src: "{{ ansible_all_ipv4_addresses }}/tmp/zabbix_agentd.conf.j2"
+            dest: "{{ ansible_all_ipv4_addresses }}/etc/zabbix/zabbix_agentd.conf"
             remote_src: yes
 
       - name: Start service zabbix-agent
