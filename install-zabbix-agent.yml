@@ -41,7 +41,7 @@
 
       - name: Create new zabbix config file from template
         template:
-            src: "{{ ansible_hostname }}/tmp/zabbix_agentd.conf.j2"
+            src: "{{ ansible_hostname }}/root/tmp/zabbix_agentd.conf.j2"
             dest: "/etc/zabbix/zabbix_agentd.conf"
 
       - name: Start service zabbix-agent
