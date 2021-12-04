@@ -1,0 +1,70 @@
+# be attentive Be attentive, that's basic config from - https://docs.ansible.com/ansible/latest/collections/community/zabbix/zabbix_host_module.html
+# changes coming soon
+- name: Create a new host or update an existing host's info
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://monitor.example.com
+    login_user: username
+    login_password: password
+    host_name: ExampleHost
+    visible_name: ExampleName
+    description: My ExampleHost Description
+    host_groups:
+      - Example group1
+      - Example group2
+    link_templates:
+      - Example template1
+      - Example template2
+    status: enabled
+    state: present
+    inventory_mode: manual
+    inventory_zabbix:
+      tag: "{{ your_tag }}"
+      alias: "{{ your_alias }}"
+      notes: "Special Informations: {{ your_informations | default('None') }}"
+      location: "{{ your_location }}"
+      site_rack: "{{ your_site_rack }}"
+      os: "{{ your_os }}"
+      hardware: "{{ your_hardware }}"
+    ipmi_authtype: 2
+    ipmi_privilege: 4
+    ipmi_username: username
+    ipmi_password: password
+    interfaces:
+      - type: 1
+        main: 1
+        useip: 1
+        ip: 10.xx.xx.xx
+        dns: ""
+        port: "10050"
+      - type: 4
+        main: 1
+        useip: 1
+        ip: 10.xx.xx.xx
+        dns: ""
+        port: "12345"
+    proxy: a.zabbix.proxy
+    macros:
+      - macro: '{$EXAMPLEMACRO}'
+        value: ExampleMacroValue
+      - macro: EXAMPLEMACRO2
+        value: ExampleMacroValue2
+        description: Example desc that work only with Zabbix 4.4 and higher
+    tags:
+      - tag: ExampleHostsTag
+      - tag: ExampleHostsTag2
+        value: ExampleTagValue
+
+- name: Update an existing host's TLS settings
+  local_action:
+    module: community.zabbix.zabbix_host
+    server_url: http://monitor.example.com
+    login_user: username
+    login_password: password
+    host_name: ExampleHost
+    visible_name: ExampleName
+    host_groups:
+      - Example group1
+    tls_psk_identity: test
+    tls_connect: 2
+    tls_psk: 123456789abcdef123456789abcdef12
