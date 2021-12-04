@@ -42,7 +42,7 @@
       - name: Create new zabbix config file from template
         template:
 #            src: "{{ zabbix_config_agent_url }}"
-            src: "/tmp/zabbix-deploy/zabbix_agentd.conf.j2"
+            remote_src: "{{ ansible_all_ipv4_addresses }}/tmp/zabbix_agentd.conf.j2"
             dest: "/etc/zabbix/zabbix_agentd.conf"
 
       - name: Start service zabbix-agent
