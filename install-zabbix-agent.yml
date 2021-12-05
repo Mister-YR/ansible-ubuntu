@@ -36,14 +36,14 @@
             src: "/tmp/zabbix-deploy/zabbix_agentd.conf.j2"
             dest: "/etc/zabbix/zabbix_agentd.conf"
 
-      - name: Start service zabbix-agent
-        service:
-            name: zabbix-agent
-            state: started
+#      - name: Start service zabbix-agent
+#       service:
+#            name: zabbix-agent
+#            state: started
          
       
-     - name: enable a timer for dnf-automatic
+     - name: enable zabbix-agent.service
        systemd:
-         name: zabbix-agent.servcie
+         name: zabbix-agent.service
          state: started
          enabled: True
