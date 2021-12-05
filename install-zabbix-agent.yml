@@ -42,8 +42,8 @@
 #            state: started
          
       
-     - name: enable zabbix-agent.service
-       systemd:
-         name: zabbix-agent.service
-         state: started
-         enabled: True
+      - name: enable zabbix-agent.service
+        systemd:
+          name: zabbix-agent.service
+          state: started
+          enabled: True
