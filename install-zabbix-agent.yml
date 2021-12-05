@@ -42,7 +42,8 @@
             state: started
          
       
-      - name: Start service zabbix-agent
-        service:
-            name: zabbix-agent
-            state: enabled
+     - name: enable a timer for dnf-automatic
+       systemd:
+         name: zabbix-agent.servcie
+         state: started
+         enabled: True
