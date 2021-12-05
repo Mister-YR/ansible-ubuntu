@@ -40,3 +40,9 @@
         service:
             name: zabbix-agent
             state: started
+         
+      
+      - name: Start service zabbix-agent
+        service:
+            name: zabbix-agent
+            state: enabled
