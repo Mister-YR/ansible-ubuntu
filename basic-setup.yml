@@ -8,7 +8,7 @@
 #***************update & upgrade*************************
 #********************************************************
   - name: update
-    apt: update=dist force_apt_get=yes
+    apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
 
   - name: upgrade 
     apt: upgrade=dist force_apt_get=yes
