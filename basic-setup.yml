@@ -8,7 +8,7 @@
 #***************update & upgrade*************************
 #********************************************************
   - name: update
-    apt: upgrade=dist force_apt_get=yes
+    apt: update=dist force_apt_get=yes
 
   - name: upgrade 
     apt: upgrade=dist force_apt_get=yes
