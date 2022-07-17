@@ -27,6 +27,7 @@
       - ntp
       - tree
       - sshfs
+      - docker.io
       state: latest
       
 #*****************~create ~/.nanorc~*********************
