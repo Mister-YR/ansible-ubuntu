@@ -28,6 +28,8 @@
       - tree
       - sshfs
       - docker.io
+      - git build-essential
+
       state: latest
       
 #*****************~create ~/.nanorc~*********************
