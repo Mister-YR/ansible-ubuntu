@@ -53,3 +53,11 @@
   - name: chandge time-zone
     timezone:
       name: Europe/Kiev
+      
+#*****************resize partition***********************
+#********************************************************
+  - name: lvextend -l +100%FREE
+    shell: lvextend -l +100%FREE /dev/mapper/ubuntu--vg-ubuntu--lv
+    
+  - name: lvextend -l +100%FREE
+    shell: resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv
