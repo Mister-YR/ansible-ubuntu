@@ -28,7 +28,7 @@
       - tree
       - sshfs
       - docker.io
-      - git build-essential
+      - make
 
       state: latest
       
