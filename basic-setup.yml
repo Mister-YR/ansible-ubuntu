@@ -27,7 +27,7 @@
       - ntp
       - tree
       - sshfs
-      - docker.io
+#- docker.io
       - make
 
       state: latest
