@@ -92,7 +92,7 @@
    - name: apt kube utils
      apt:
        name:
-       - kubeletdocker
+       - kubelet
        - kubeadm
        - kubectl
 
