@@ -5,6 +5,7 @@
   #become_method: su
   #become_user: root
   ignore_errors: true
+  
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name:
