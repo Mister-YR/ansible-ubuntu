@@ -90,9 +90,12 @@
 #      classic: yes
    - name: docker usermod
      shell: usermod -aG docker $USER
-   - name: nergp docker
-     shell: newgrp docker
-
+#  - name: nergp docker
+#     shell: newgrp docker
+   - name: newgrp docker
+     group:
+       name: 'docker'
+       state: present
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install kubectl utils  ~~~~~~~~~~~~~~~~~~~~~~~~
    - name: apt kube utils
      apt:
