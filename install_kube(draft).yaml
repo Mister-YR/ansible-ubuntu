@@ -100,9 +100,9 @@
    - name: apt kube utils
      apt:
        name:
-       - kubelet=1.24.0-00
-       - kubeadm=1.24.0-00
-       - kubectl=1.24.0-00
+       - kubelet=1.21.0-00
+       - kubeadm=1.21.0-00
+       - kubectl=1.21.0-00
 
        state: present
 
