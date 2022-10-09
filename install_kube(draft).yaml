@@ -73,9 +73,9 @@
    #- name: newgrp libvirt
    #  shell:  newgrp libvirt
    - name: newgrp libvirt
-      group:
-        name: 'libvirt'
-        state: present
+     group:
+       name: 'libvirt'
+       state: present
 
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install docker-ce utils ~~~~~~~~~~~~~~~~~~~~~~
    - name: apt-cache policy
