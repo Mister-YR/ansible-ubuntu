@@ -128,6 +128,12 @@
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name: enable kvm2 driaver for default
      shell: minikube config set vm-driver kvm2
+     
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ fix kubeadm error  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: fix kubeamd error
+     shell: |
+      sudo rm /etc/containerd/config.toml
+      sudo systemctl restart containerd
     
 # sudo ansible-playbook kube.yaml --ask-become-pass -v^C
 # minikube start --driver=kvm2
