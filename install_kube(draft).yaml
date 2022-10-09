@@ -70,8 +70,12 @@
        state: latest
    - name: libvirt usermod
      shell: sudo usermod -aG libvirt $USER
+   #- name: newgrp libvirt
+   #  shell:  newgrp libvirt
    - name: newgrp libvirt
-     shell:  newgrp libvirt
+      group:
+        name: 'libvirt'
+        state: present
 
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install docker-ce utils ~~~~~~~~~~~~~~~~~~~~~~
    - name: apt-cache policy
