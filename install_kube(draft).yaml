@@ -8,8 +8,16 @@
   
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   - name:
-     shell: sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+   - name: Disable swap for current session
+     command: swapoff -a
+     become: true
+
+   - name: Disable swap permanently
+     replace:
+       path: /etc/fstab
+       regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+       replace: '#\1\2\3swap\4'
+     backup: yes
      
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ add docker repo & gpg keys  ~~~~~~~~~~~~~~~~~~
    - name: add corect gpgp for repo
