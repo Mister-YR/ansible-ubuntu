@@ -7,10 +7,6 @@
   
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   - name: Disable swap for current session
-     command: swapoff -a
-     become: true
-
    - name: Disable swap permanently
      replace:
        path: /etc/fstab
@@ -107,9 +103,9 @@
    - name: apt kube utils
      apt:
        name:
-       - kubelet=1.21.0-00
-       - kubeadm=1.21.0-00
-       - kubectl=1.21.0-00
+       - kubelet=1.24.0-00
+       - kubeadm=1.24.0-00
+       - kubectl=1.24.0-00
 
        state: present
 
@@ -141,12 +137,6 @@
      reboot:
        reboot_timeout: 1800
      
-##~~~~~~~~~~~~~~~~~~~~~~~~~~~ fix kubeadm error  ~~~~~~~~~~~~~~~~~~~~~~~~~~
-#   - name: fix kubeamd error
-#     shell: |
-#      sudo rm /etc/containerd/config.toml
-#      sudo systemctl restart containerd
-    
 # sudo ansible-playbook kube.yaml --ask-become-pass -v^C
 # minikube start --driver=kvm2
 #test
