@@ -17,8 +17,8 @@
        path: /etc/fstab
        regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
        replace: '#\1\2\3swap\4'
-     backup: yes
-     
+       backup: yes
+       
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ add docker repo & gpg keys  ~~~~~~~~~~~~~~~~~~
    - name: add corect gpgp for repo
      shell: sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
