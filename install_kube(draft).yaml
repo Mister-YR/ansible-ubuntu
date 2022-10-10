@@ -129,6 +129,11 @@
    - name: enable kvm2 driaver for default
      shell: minikube config set vm-driver kvm2
      
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ reboot ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+   - name: Reboot a Linux machine 
+     reboot:
+       reboot_timeout: 1800
+     
 ##~~~~~~~~~~~~~~~~~~~~~~~~~~~ fix kubeadm error  ~~~~~~~~~~~~~~~~~~~~~~~~~~
 #   - name: fix kubeamd error
 #     shell: |
