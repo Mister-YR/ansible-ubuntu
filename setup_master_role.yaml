@@ -24,13 +24,15 @@
        state: reloaded
       
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Create the actual cluster ~~~~~~~~~~~~~~~~~~
-   - name: Create the actual cluster 
+   - name: Create the actual cluster
+     remote_user: "{{ ansible_user }}"
      sudo: true
      sudo_user: "{{ sudo-user }}"
      shell: kubeadm init --pod-network-cidr="{{ net-addr }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ folder & file dependency  ~~~~~~~~~~~~~~~~~~
    - name: folder & file dependency
+     remote_user: "{{ ansible_user }}"
      sudo: true
      sudo_user: "{{ sudo-user }}"
      shell: | 
@@ -40,18 +42,21 @@
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install the Calico network plugin  ~~~~~~~~
    - name: Install the Calico network plugin
+     remote_user: "{{ ansible_user }}"
      sudo: true
      sudo_user: "{{ sudo-user }}"
      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ taint nodes *MASTER* ~~~~~~~~~~~~~~~~~~~~~~
    - name: taint nodes *MASTER*
+     remote_user: "{{ ansible_user }}"
      sudo: true
      sudo_user: "{{ sudo-user }}"
      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ create & print join token ~~~~~~~~~~~~~~~~~
    - name: create & print join token
+     remote_user: "{{ ansible_user }}"
      sudo_user: "{{ sudo-user }}"
      shell: kubeadm token create --print-join-command
      register: command_output
