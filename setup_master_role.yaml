@@ -2,8 +2,6 @@
 - hosts: all
   become: true
   ignore_errors: true
-  vars:
-      net-addr:
   
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
