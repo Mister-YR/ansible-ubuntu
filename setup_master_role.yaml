@@ -25,40 +25,36 @@
       
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Create the actual cluster ~~~~~~~~~~~~~~~~~~
    - name: Create the actual cluster
-     remote_user: "{{ ansible_user }}"
-     sudo: true
-     sudo_user: "{{ sudo-user }}"
      shell: kubeadm init --pod-network-cidr="{{ net-addr }}"
+     become: yes
+     become_user: "{{ sudo-user }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ folder & file dependency  ~~~~~~~~~~~~~~~~~~
    - name: folder & file dependency
-     remote_user: "{{ ansible_user }}"
-     sudo: true
-     sudo_user: "{{ sudo-user }}"
      shell: | 
         mkdir -p $HOME/.kube
         sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
         sudo chown $(id -u):$(id -g) $HOME/.kube/config
+     become: yes
+     become_user: "{{ sudo-user }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install the Calico network plugin  ~~~~~~~~
    - name: Install the Calico network plugin
-     remote_user: "{{ ansible_user }}"
-     sudo: true
-     sudo_user: "{{ sudo-user }}"
      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+     become: yes
+     become_user: "{{ sudo-user }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ taint nodes *MASTER* ~~~~~~~~~~~~~~~~~~~~~~
    - name: taint nodes *MASTER*
-     remote_user: "{{ ansible_user }}"
-     sudo: true
-     sudo_user: "{{ sudo-user }}"
      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+     become: yes
+     become_user: "{{ sudo-user }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ create & print join token ~~~~~~~~~~~~~~~~~
    - name: create & print join token
-     remote_user: "{{ ansible_user }}"
-     sudo_user: "{{ sudo-user }}"
      shell: kubeadm token create --print-join-command
+     become: yes
+     become_user: "{{ sudo-user }}"
      register: command_output
 
    - debug: 
