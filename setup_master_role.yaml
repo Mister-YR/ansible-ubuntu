@@ -25,19 +25,45 @@
       
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Create the actual cluster ~~~~~~~~~~~~~~~~~~
    - name: Create the actual cluster
-     shell: kubeadm init --pod-network-cidr="{{ net-addr }}"
+     shell: kubeadm init --pod-network-cidr="{{ net_addr }}"
      become: yes
      become_user: "{{ user }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ folder & file dependency  ~~~~~~~~~~~~~~~~~~
-   - name: folder & file dependency
-     shell: | 
-        mkdir -p $HOME/.kube
-        sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-        sudo chown $(id -u):$(id -g) $HOME/.kube/config
-     become: yes
-     become_user: "{{ user }}"
-
+  # - name: folder & file dependency
+  #   shell: | 
+  #      mkdir -p $HOME/.kube
+  #      sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  #      sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  #   become: yes
+  #   become_user: "{{ user }}"
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: $HOME/.kube
+      state: directory
+      mode: '0666'
+      become: yes
+      become_user: "{{ user }}"
+      
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: /etc/kubernetes/admin.conf
+      dest: $HOME/.kube/config
+      owner: "{{ user }}"
+      group: foo
+      mode: '0644'
+      become: yes
+      become_user: "{{ user }}"
+      
+  - name: Change file ownership, group and permissions
+    ansible.builtin.file:
+      path: $HOME/.kube/config
+      owner: foo
+      group: foo
+      mode: '0644'
+      become: yes
+      become_user: "{{ user }}"
+      
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install the Calico network plugin  ~~~~~~~~
    - name: Install the Calico network plugin
      shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
@@ -58,4 +84,4 @@
      register: command_output
 
    - debug: 
-      var: command_output.stdout_lines
+       var: command_output.stdout_lines
