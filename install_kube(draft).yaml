@@ -132,6 +132,14 @@
    - name: enable kvm2 driaver for default
      shell: minikube config set vm-driver kvm2
      
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
+   - name: replase docker native.cgroupdriver
+     replace:
+       path: /usr/lib/systemd/system/docker.service
+       regexp: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock'
+       replace: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd'
+       backup: yes
+ 
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ reboot ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
    - name: Reboot a Linux machine 
      reboot:
