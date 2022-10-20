@@ -108,6 +108,9 @@
        - kubectl=1.21.0-00
 
        state: present
+       
+   - name: lock kubeutils version
+     shell: sudo apt-mark hold kubelet kubeadm kubectl
 
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install minikube  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name: Install minikube
