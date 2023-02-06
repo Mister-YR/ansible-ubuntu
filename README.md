@@ -1,2 +1,3 @@
 # ansible-ubuntu
-playbook for ubuntu 
+Playbook for Ubuntu 
+Feel free to use it.
