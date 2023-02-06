@@ -4,6 +4,7 @@
   #become_method: su
   #become_user: root
   ignore_errors: true
+  # WOKKS only vith KVM driaver, on PVE
   
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
