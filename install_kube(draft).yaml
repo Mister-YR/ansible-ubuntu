@@ -131,9 +131,9 @@
    - debug: 
       var: command_output.stdout_lines
 
- #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
-   - name: enable kvm2 driaver for default
-     shell: minikube config set vm-driver kvm2
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable docker driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: enable docker driaver for default
+     shell: minikube config set vm-driver docker
      
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
    - name: replase docker native.cgroupdriver
