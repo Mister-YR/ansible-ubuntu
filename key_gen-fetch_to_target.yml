@@ -23,7 +23,7 @@
     register: key
         
   - name: Copy the key add to authorized_keys using Ansible module
-    delegate_to: 192.168.168.13
+    delegate_to: "{{ srv-ip}}"
     delegate_facts: true
     lineinfile:
      path: "~/.ssh/authorized_keys"

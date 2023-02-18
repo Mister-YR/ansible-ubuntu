@@ -30,13 +30,6 @@
      become_user: "{{ user }}"
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ folder & file dependency  ~~~~~~~~~~~~~~~~~~
-  # - name: folder & file dependency
-  #   shell: | 
-  #      mkdir -p $HOME/.kube
-  #      sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-  #      sudo chown $(id -u):$(id -g) $HOME/.kube/config
-  #   become: yes
-  #   become_user: "{{ user }}"
   - name: Create a directory if it does not exist
     ansible.builtin.file:
       path: $HOME/.kube
@@ -66,7 +59,7 @@
       
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install the Calico network plugin  ~~~~~~~~
    - name: Install the Calico network plugin
-     shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+     shell: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
      become: yes
      become_user: "{{ user }}"
 

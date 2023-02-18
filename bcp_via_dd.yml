@@ -11,7 +11,7 @@
       state: directory
 
   - name: mount sftp to /mnt/sshftps
-    shell: /usr/bin/sshfs -o idmap=user,reconnect root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
+    shell: /usr/bin/sshfs -o idmap=user,reconnect root@"{{ srv-ip }}"":/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
 
   - name: create baremetal backup via dd to /nmt/sshftps
     shell: sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /mnt/sshftps/{{ ansible_facts['nodename'] }}-{{ ansible_date_time.date }}.img.gz

@@ -1,4 +1,3 @@
-# add key to root
 ---
 - hosts: all
   become: true

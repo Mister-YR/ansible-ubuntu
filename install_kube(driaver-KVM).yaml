@@ -1,10 +1,8 @@
+# WOKKS only vith KVM driaver, on PVE (tested on pve 7)
 ---
 - hosts: all
   become: true
-  #become_method: su
-  #become_user: root
   ignore_errors: true
-  # WOKKS only vith KVM driaver, on PVE
   
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -34,8 +32,6 @@
      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
    - name: docker-archive-keyring
      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-#   - name: adddocker repo
-#     shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
    - name:
      shell: | 
         echo \
@@ -74,8 +70,6 @@
        state: latest
    - name: libvirt usermod
      shell: sudo usermod -aG libvirt $USER
-   #- name: newgrp libvirt
-   #  shell:  newgrp libvirt
    - name: newgrp libvirt
      group:
        name: 'libvirt'
@@ -88,14 +82,8 @@
      shell: apt-cache madison docker-ce
    - name: install dockerCE
      shell: apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-#   - name:
-#     snap:
-#      name: docker
-#      classic: yes
    - name: docker usermod
      shell: usermod -aG docker $USER
-#  - name: nergp docker
-#     shell: newgrp docker
    - name: newgrp docker
      group:
        name: 'docker'
@@ -136,7 +124,7 @@
    - name: enable kvm2 driaver for default
      shell: minikube config set vm-driver kvm2
      
- #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroup driver  ~~~~~~~~
    - name: replase docker native.cgroupdriver
      replace:
        path: /usr/lib/systemd/system/docker.service
@@ -148,7 +136,3 @@
    - name: Reboot a Linux machine 
      reboot:
        reboot_timeout: 1800
-     
-# sudo ansible-playbook kube.yaml --ask-become-pass -v^C
-# minikube start --driver=kvm2
-#test

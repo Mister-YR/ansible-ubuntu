@@ -23,4 +23,3 @@
     ansible.builtin.debug:
       msg: "{{ ansible_default_ipv4.address }}"
     when: ansible_facts['services'][serv_status].state == "stopped"
-    #delegate_to: localhost

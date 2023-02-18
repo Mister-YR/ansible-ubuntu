@@ -29,7 +29,6 @@
       - sshfs
       - docker.io
       - make
-
       state: latest
       
 #*****************~create ~/.nanorc~*********************

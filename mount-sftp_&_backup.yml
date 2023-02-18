@@ -7,4 +7,4 @@
 
   tasks:
   - name:
-    shell: /usr/bin/sshfs -o idmap=user,reconnect root@192.168.168.13:/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
+    shell: /usr/bin/sshfs -o idmap=user,reconnect root@"{{ srv-ip}}":/data/sf-awx-bcp-user/bcp-linux /mnt/sshftps
