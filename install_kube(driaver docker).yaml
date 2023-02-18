@@ -119,7 +119,7 @@
       curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
       && sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
- #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install docker driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name: install kvm2 driver
      shell: |
       sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
