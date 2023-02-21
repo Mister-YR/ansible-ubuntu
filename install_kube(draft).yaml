@@ -1,8 +1,9 @@
+# Created for install minikube with docker driver on ubuntu
 ---
 - hosts: all
   become: true
   ignore_errors: true
-  
+
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name: Disable swap permanently
@@ -31,8 +32,6 @@
      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
    - name: docker-archive-keyring
      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-#   - name: adddocker repo
-#     shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
    - name:
      shell: | 
         echo \
@@ -48,11 +47,11 @@
      apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
 
    - name: some packages
-     shell: apt install apt-transport-https ca-certificates curl  gnupg -y
+     shell: apt-get install apt-transport-https ca-certificates curl  gnupg -y
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install libvirt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name: install lsb-releases
-     shell: apt install apt-transport-https ca-certificates curl gnupg lsb-release -y
+     shell: apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
    - name: install libvirt
      shell: apt install qemu-kvm libvirt-dev bridge-utils libvirt-daemon-system libvirt-daemon virtinst bridge-utils libosinfo-bin libguestfs-tools virt-top -y
    - name: enable libvirt 
@@ -71,8 +70,6 @@
        state: latest
    - name: libvirt usermod
      shell: sudo usermod -aG libvirt $USER
-   #- name: newgrp libvirt
-   #  shell:  newgrp libvirt
    - name: newgrp libvirt
      group:
        name: 'libvirt'
@@ -84,15 +81,9 @@
    - name: apt-cache madison 
      shell: apt-cache madison docker-ce
    - name: install dockerCE
-     shell: apt install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-#   - name:
-#     snap:
-#      name: docker
-#      classic: yes
+     shell: apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
    - name: docker usermod
      shell: usermod -aG docker $USER
-#  - name: nergp docker
-#     shell: newgrp docker
    - name: newgrp docker
      group:
        name: 'docker'
@@ -116,22 +107,22 @@
       curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
       && sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
- #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
- #  - name: install kvm2 driver
- #    shell: |
- #     sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
- #     sudo chmod +x docker-machine-driver-kvm2
- #     sudo mv docker-machine-driver-kvm2 /usr/local/bin/
- #  - name:
- #    shell: docker-machine-driver-kvm2 version
- #    register: command_output
- #
- #  - debug: 
- #     var: command_output.stdout_lines
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install docker driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: install kvm2 driver
+     shell: |
+      sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
+      sudo chmod +x docker-machine-driver-kvm2
+      sudo mv docker-machine-driver-kvm2 /usr/local/bin/
+   - name:
+     shell: docker-machine-driver-kvm2 version
+     register: command_output
 
- #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable docker driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
-   - name: enable docker driaver for default
-     shell: minikube config set vm-driver docker
+   - debug: 
+      var: command_output.stdout_lines
+
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: enable kvm2 driaver for default
+     shell: minikube config set vm-driver kvm2
      
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
    - name: replase docker native.cgroupdriver
@@ -145,7 +136,3 @@
    - name: Reboot a Linux machine 
      reboot:
        reboot_timeout: 1800
-     
-# sudo ansible-playbook kube.yaml --ask-become-pass -v^C
-# minikube start --driver=kvm2
-#test
