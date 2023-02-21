@@ -3,6 +3,7 @@
 - hosts: all
   become: true
   ignore_errors: true
+  command_warnings: false
 
   tasks:
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
