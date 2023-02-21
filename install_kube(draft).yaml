@@ -108,9 +108,9 @@
       curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
       && sudo install minikube-linux-amd64 /usr/local/bin/minikube
 
- #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable docker driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
    - name: enable kvm2 driaver for default
-     shell: minikube config set vm-driver kvm2
+     shell: minikube config set vm-driver docker
      
  #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
    - name: replase docker native.cgroupdriver
