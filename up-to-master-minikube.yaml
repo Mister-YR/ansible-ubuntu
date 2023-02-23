@@ -1,0 +1,81 @@
+# setup role 
+---
+- hosts: all
+  become: true
+  ignore_errors: true
+  
+  tasks:
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroupdriver  ~~~~~~~
+  - name: replase docker native.cgroupdriver
+     replace:
+       path: /usr/lib/systemd/system/docker.service
+       regexp: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock'
+       replace: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd'
+       backup: yes
+       
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ restart docker services  ~~~~~~~~~~~~~~~~~~
+  - name: restart docker services
+     ansible.builtin.service:
+       name: daemon-reload
+       state: reloaded
+
+  - name: restart docker services
+     ansible.builtin.service:
+       name: docker
+       state: reloaded
+      
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ Create the actual cluster ~~~~~~~~~~~~~~~~~~
+  - name: Create the actual cluster
+     shell: kubeadm init --pod-network-cidr="{{ net_addr }}"
+     become: yes
+     become_user: "{{ user }}"
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ folder & file dependency  ~~~~~~~~~~~~~~~~~~
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: $HOME/.kube
+      state: directory
+      mode: '0666'
+      become: yes
+      become_user: "{{ user }}"
+      
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: /etc/kubernetes/admin.conf
+      dest: $HOME/.kube/config
+      owner: "{{ user }}"
+      group: foo
+      mode: '0644'
+      become: yes
+      become_user: "{{ user }}"
+      
+  - name: Change file ownership, group and permissions
+    ansible.builtin.file:
+      path: $HOME/.kube/config
+      owner: foo
+      group: foo
+      mode: '0644'
+      become: yes
+      become_user: "{{ user }}"
+      
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install the Calico network plugin  ~~~~~~~~
+  - name: Install the Calico network plugin via mafifest
+      shell: kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.0/manifests/calico.yaml
+      become: yes
+      become_user: "{{ user }}"
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ taint nodes *MASTER* ~~~~~~~~~~~~~~~~~~~~~~
+  - name: taint nodes *MASTER*
+      shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+      become: yes
+      become_user: "{{ user }}"
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ create & print join token ~~~~~~~~~~~~~~~~~
+  - name: create & print join token
+      shell: kubeadm token create --print-join-command
+      become: yes
+      become_user: "{{ user }}"
+      register: command_output
+
+  - debug: 
+      var: command_output.stdout_lines

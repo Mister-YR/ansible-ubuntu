@@ -1,0 +1,138 @@
+# WOKKS only vith KVM driaver, on PVE (tested on pve 7)
+---
+- hosts: all
+  become: true
+  ignore_errors: true
+  
+  tasks:
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ disable swap  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: Disable swap permanently
+     replace:
+       path: /etc/fstab
+       regexp: '^(\s*)([^#\n]+\s+)(\w+\s+)swap(\s+.*)$'
+       replace: '#\1\2\3swap\4'
+       backup: yes
+       
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ add docker repo & gpg keys  ~~~~~~~~~~~~~~~~~~
+   - name: add corect gpgp for repo
+     shell: sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+   - name: add gpg kube via curl 
+     shell: sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+   - name: add gpg kube
+     shell: echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+   - name: add repo docker
+     shell: echo "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" >> /etc/apt/sources.list
+
+   - name: add dockers gpg repo
+     shell: sudo mkdir -p /etc/apt/keyrings
+   - name: add match MOOOOOOOre dockers gpg repo
+     shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+   - name: docker-archive-keyring
+     shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+   - name:
+     shell: | 
+        echo \
+        "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   - name:
+     shell: | 
+        echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ update  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: update
+     apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+
+   - name: some packages
+     shell: apt-get install apt-transport-https ca-certificates curl  gnupg -y
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install libvirt ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: install lsb-releases
+     shell: apt-get install apt-transport-https ca-certificates curl gnupg lsb-release -y
+   - name: install libvirt
+     shell: apt install qemu-kvm libvirt-dev bridge-utils libvirt-daemon-system libvirt-daemon virtinst bridge-utils libosinfo-bin libguestfs-tools virt-top -y
+   - name: enable libvirt 
+     ansible.builtin.service:
+       name: libvirtd
+       enabled: yes
+   - name: enable libvirt 
+     ansible.builtin.service:
+       name: libvirtd
+       state: started
+   - name: install libvirt-client
+     apt:
+       name:
+        - libvirt-clients
+
+       state: latest
+   - name: libvirt usermod
+     shell: sudo usermod -aG libvirt $USER
+   - name: newgrp libvirt
+     group:
+       name: 'libvirt'
+       state: present
+
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install docker-ce utils ~~~~~~~~~~~~~~~~~~~~~~
+   - name: apt-cache policy
+     shell: apt-cache policy docker-ce
+   - name: apt-cache madison 
+     shell: apt-cache madison docker-ce
+   - name: install dockerCE
+     shell: apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+   - name: docker usermod
+     shell: usermod -aG docker $USER
+   - name: newgrp docker
+     group:
+       name: 'docker'
+       state: present
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install kubectl utils  ~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: apt kube utils
+     apt:
+       name:
+       - kubelet=1.21.0-00
+       - kubeadm=1.21.0-00
+       - kubectl=1.21.0-00
+
+       state: present
+       
+   - name: lock kubeutils version
+     shell: sudo apt-mark hold kubelet kubeadm kubectl
+
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install minikube  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: Install minikube
+     shell: |
+      curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
+      && sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ Install kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: install kvm2 driver
+     shell: |
+      sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/docker-machine-driver-kvm2
+      sudo chmod +x docker-machine-driver-kvm2
+      sudo mv docker-machine-driver-kvm2 /usr/local/bin/
+   - name:
+     shell: docker-machine-driver-kvm2 version
+     register: command_output
+
+   - debug: 
+      var: command_output.stdout_lines
+
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ enable kvm driver  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   - name: enable kvm2 driaver for default
+     shell: minikube config set vm-driver kvm2
+     
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ replase docker native.cgroup driver  ~~~~~~~~
+   - name: replase docker native.cgroupdriver
+     replace:
+       path: /usr/lib/systemd/system/docker.service
+       regexp: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock'
+       replace: 'ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --exec-opt native.cgroupdriver=systemd'
+       backup: yes
+ 
+ #~~~~~~~~~~~~~~~~~~~~~~~~~~~ reboot ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+   - name: Reboot a Linux machine 
+     reboot:
+       reboot_timeout: 1800
